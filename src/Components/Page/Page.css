@@ -1,0 +1,38 @@
+.page {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+.header {
+  background: var(--background-primary);
+}
+
+.header__container {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto 1fr;
+  height: 90px;
+}
+
+.header__controls {
+  margin-left: auto;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  height: 124px;
+  background-color: var(--constant-black);
+  color: var(--constant-white);
+}
+
+.footer__link {
+  color: var(--constant-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer__link:hover {
+  opacity: 0.8;
+}

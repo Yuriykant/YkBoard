@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;900&display=swap");
+
+:root {
+  --constant-black-alpha64: rgba(0, 0, 0, 0.64);
+  --constant-white-alpha12: rgba(0, 0, 0, 0.12);
+  --constant-black-hover: rgb(80, 80, 80);
+  --constant-white-hover: rgb(120, 120, 120);
+  --constant-black: #262a2f;
+  --constant-accent: #0083fc;
+  --constant-grey: #a3a3a3;
+  --constant-grey-white: #ebebeb;
+  --constant-white: #fff;
+  --container-width: 940px;
+  --container-padding: 20px;
+  --grid-column-width: 60px;
+  --grid-gap: 20px;
+  --background-zero: var(--constant-white);
+  --background-primary: var(--constant-white);
+  --foreground-primary: var(--constant-black);
+  --foreground-primary-hover: var(--constant-white-hover);
+  --color-scheme-switcher-border: var(--constant-grey-white);
+  --color-scheme-border-treedot: transparent;
+  --skeleton-color: var(--constant-grey);
+
+  color-scheme: light;
+}
+
+[scheme="dark"] {
+  --background-zero: #131517;
+  --background-primary: var(--constant-black);
+  --foreground-primary: var(--constant-white);
+  --foreground-primary-hover: var(--constant-black-hover);
+  --color-scheme-switcher-border: transparent;
+  --color-scheme-border-treedot: var(--constant-grey-white);
+  --skeleton-color: var(--constant-white-alpha12);
+
+  color-scheme: dark;
+}
+
+*:not(svg *) {
+  all: unset;
+  display: revert;
+}
+
+.--prevent-scroll {
+  overflow: hidden;
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  background-color: var(--background-zero);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--foreground-primary);
+  min-width: calc(var(--container-width) + 2 * var(--container-padding));
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  max-width: var(--container-width);
+}
