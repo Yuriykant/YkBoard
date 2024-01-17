@@ -12,7 +12,6 @@ type PageProps = {
 };
 
 export const Page: FC<PageProps> = ({ children }) => {
-  // const [emailModalShown, setEmainModalShown] = useState(!localStorage.getItem(LS_EMAIL_SHOWN_KEY));
   return (
     <div className="page">
       <header className="header">

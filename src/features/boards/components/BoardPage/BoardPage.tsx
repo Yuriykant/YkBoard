@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { IBoard } from '@features/desks/types';
+import { IBoard } from '@features/boards/types';
 import { BoardForm } from '../BoardForm/BoardForm';
 import { ThreeDotsMenu } from '@Components/ ThreeDotsMenu/ ThreeDotsMenu';
+import { useNavigate } from 'react-router-dom';
 
 import Paper from '@mui/material/Paper';
 import { Box } from '@mui/system';
@@ -11,21 +12,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 import './BoardPage.css';
 
 import { Dispatch } from '@app/store';
-import { fetchBoards } from '@features/desks/actions';
-import { getBoards, setLoading } from '@features/desks/selectors';
+import { fetchBoards } from '@features/boards/actions';
+import { getBoards, setLoading } from '@features/boards/selectors';
 
 export const BoardPage = () => {
   const dispatch = useDispatch<Dispatch>();
   const desks = useSelector(getBoards);
   const loading = useSelector(setLoading);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     dispatch(fetchBoards());
   }, []);
-
-  // const onSavedEdit = ()=>{
-  //   if
-  // }
 
   return (
     <Box className="container">
@@ -59,6 +58,12 @@ export const BoardPage = () => {
               }}
               elevation={2}
               key={desk.id}
+              onClick={(e) => {
+                const target = e.target as HTMLElement;
+                if (target.classList.contains('MuiPaper-root') || target.classList.contains('MuiTypography-root')) {
+                  navigate((`/board/${desk.id}`));
+                }
+              }}
             >
               <Typography variant="h6" gutterBottom sx={{ color: 'var(--foreground-primary)' }}>
                 {desk.name}

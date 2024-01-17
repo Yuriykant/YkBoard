@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 
 import { Dispatch } from '@app/store';
-import { createBoard } from '@features/desks/actions';
+import { createBoard } from '@features/boards/actions';
 
 export const BoardForm: FC = () => {
   const [inputvalue, setInputValue] = useState('');
@@ -30,7 +30,7 @@ export const BoardForm: FC = () => {
   };
 
   const onSubmit = async (value: string) => {
-    await dispatch(createBoard({ name: value }));
+    await dispatch(createBoard({ name: value, }));
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

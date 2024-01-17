@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import IconButton from '@mui/material/IconButton';
@@ -7,14 +7,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { Dispatch } from '@app/store';
-import { deleteBoard, updateBoard } from '@features/desks/actions';
+import { deleteBoard, updateBoard } from '@features/boards/actions';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { Timestamp } from 'firebase/firestore';
-import { format } from 'date-fns';
-import { ru } from 'date-fns/locale';
 
 interface ThreeDotsMenuProps {
   deleteType: 'board' | 'card';
@@ -29,8 +26,6 @@ export const ThreeDotsMenu: FC<ThreeDotsMenuProps> = ({ deleteType, id, deskName
   const open = Boolean(anchorEl);
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState(deskName);
-  const [createdDate, setCreatedDate] = useState('');
-  const [updatedDate, setUpdatedDate] = useState('');
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -40,31 +35,6 @@ export const ThreeDotsMenu: FC<ThreeDotsMenuProps> = ({ deleteType, id, deskName
   };
 
   const dispatch = useDispatch<Dispatch>();
-
-  const formatDate = (timestamp: Timestamp) => {
-    if (timestamp && timestamp.seconds) {
-      const milliseconds = timestamp.seconds * 1000;
-      const date = new Date(milliseconds);
-      return format(date, 'HH:mm dd MMMM yyyy', { locale: ru });
-    }
-    return null;
-  };
-
-  useEffect(() => {
-    const updatedFormattedDate = formatDate(updatedAt);
-    if (updatedFormattedDate) {
-      setUpdatedDate(updatedFormattedDate);
-    }
-  }, [updatedAt]);
-
-  useEffect(() => {
-    if (createdAt) {
-      const createdFormattedDate = formatDate(createdAt);
-      if (createdFormattedDate) {
-        setCreatedDate(createdFormattedDate);
-      }
-    }
-  }, [createdAt]);
 
   const removeBoard = async () => {
     if (!id) {
@@ -151,7 +121,7 @@ export const ThreeDotsMenu: FC<ThreeDotsMenuProps> = ({ deleteType, id, deskName
           color: 'var(--foreground-primary-hover)',
         }}
       >
-        {updatedAt ? `обновлена в: ${updatedDate}` : `создана: ${createdDate}`}
+        {updatedAt ? `обновлена в: ${updatedAt}` : `создана: ${createdAt}`}
       </Typography>
       <IconButton
         aria-label="more"
@@ -189,7 +159,9 @@ export const ThreeDotsMenu: FC<ThreeDotsMenuProps> = ({ deleteType, id, deskName
               color: 'var(--foreground-primary)',
             },
           }}
-          onClick={removeBoard}
+          onClick={() => {
+            removeBoard()
+          }}
         >
           Удалить {deleteType == 'board' ? 'доску' : 'карточку'}
         </MenuItem>
@@ -203,7 +175,9 @@ export const ThreeDotsMenu: FC<ThreeDotsMenuProps> = ({ deleteType, id, deskName
               color: 'var(--foreground-primary)',
             },
           }}
-          onClick={() => setIsEdit(true)}
+          onClickCapture={() => {
+            setIsEdit(true)
+          }}
         >
           Редактировать
         </MenuItem>

@@ -14,7 +14,9 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 
-import { IBoard } from '@features/desks/types';
+import { IBoard } from '@features/boards/types';
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 
 export const initializeAPI = (): FirebaseApp => {
   const firebaseApp = initializeApp({
@@ -38,7 +40,12 @@ export const getDesksApi = async (): Promise<IBoard[]> => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       const data = doc.data() as Omit<IBoard, 'id'>;
-      desks.push({ id: doc.id, ...data });
+      const createdAtString = format(data.createdAt.toDate(), 'HH:mm dd MMMM yyyy', { locale: ru });
+      let updatedAtString = null;
+      if (data.updatedAt) {
+        updatedAtString = format(data.updatedAt.toDate(), 'HH:mm dd MMMM yyyy', { locale: ru });
+      }
+      desks.push({ id: doc.id, ...data, updatedAt: updatedAtString, createdAt: createdAtString });
     });
   } catch (error) {
     return Promise.reject(error);

@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { createDeskApi, deleteDeskApi, getDesksApi, updateDeskApi } from '@app/api';
-import { getBoardsState, deleteBoardState } from '@features/desks/slice';
+import { getBoardsState, deleteBoardState } from '@features/boards/slice';
 import { IBoard } from './types';
 
 export const fetchBoards = createAsyncThunk('boardList/getBoards', async (_, thunk) => {
   const boardsList = await getDesksApi();
   thunk.dispatch(getBoardsState(boardsList));
+
   return boardsList;
 });
 

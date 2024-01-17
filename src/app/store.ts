@@ -1,20 +1,10 @@
 import { configureStore, ThunkAction, PayloadAction } from '@reduxjs/toolkit';
-import boardsListSliceReducer from '@features/desks/slice';
-import { getFirebase } from 'react-redux-firebase';
+import boardsListSliceReducer from '@features/boards/slice';
 
 export const store = configureStore({
   reducer: {
     boardsListSlice: boardsListSliceReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: {
-          getFirebase,
-        },
-      },
-      serializableCheck: false, // Отключаем проверку сериализации
-    }),
   devTools: process.env.NODE_ENV !== 'production',
 });
 
